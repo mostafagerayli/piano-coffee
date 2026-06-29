@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>افزودن نوشیدنی | Piano Coffee</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>افزودن نوشیدنی</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="text"
+                   name="name"
+                   placeholder="اسم نوشیدنی"
+                   required>
+
+            <input type="number"
+                   name="price"
+                   min="0"
+                   step="1000"
+                   placeholder="قیمت به تومان"
+                   required>
+
+            <select name="category" required>
+                <option value="">انتخاب دسته‌بندی</option>
+
+                {% for category in categories %}
+                    <option value="{{ category }}">
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <input type="file"
+                   name="image"
+                   accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+                   required>
+
+            <button type="submit">
+                ثبت نوشیدنی
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('admin') }}" class="back-admin-link">
+            بازگشت به پنل مدیریت
+        </a>
+
+    </div>
+
+</body>
+
+</html>

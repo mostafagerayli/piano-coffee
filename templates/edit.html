@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش نوشیدنی | Piano Coffee</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>ویرایش نوشیدنی</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="text"
+                   name="name"
+                   value="{{ drink.name }}"
+                   placeholder="اسم نوشیدنی"
+                   required>
+
+            <input type="number"
+                   name="price"
+                   min="0"
+                   step="1000"
+                   value="{{ drink.price }}"
+                   placeholder="قیمت به تومان"
+                   required>
+
+            <select name="category" required>
+                {% for category in categories %}
+                    <option value="{{ category }}"
+                            {% if drink.category == category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <p class="current-image-label">
+                عکس فعلی:
+            </p>
+
+            <img src="{{ drink.image }}"
+                 class="edit-preview-image"
+                 alt="{{ drink.name }}">
+
+            <input type="file"
+                   name="image"
+                   accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+
+            <button type="submit">
+                ذخیره تغییرات
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('admin') }}" class="back-admin-link">
+            بازگشت به پنل مدیریت
+        </a>
+
+    </div>
+
+</body>
+
+</html>

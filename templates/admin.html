@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت | Piano Coffee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="admin-panel">
+
+        <div class="admin-topbar">
+            <div>
+                <h1>پنل مدیریت کافه پیانو</h1>
+                <p class="admin-subtitle">
+                    مدیریت منو، نوشیدنی‌ها، قیمت‌ها، تصاویر و ترتیب نمایش
+                </p>
+            </div>
+
+            <div class="admin-actions">
+                <a href="{{ url_for('home') }}" class="admin-action-btn view-btn">
+                    مشاهده سایت
+                </a>
+
+                <a href="{{ url_for('add') }}" class="admin-action-btn add-new-btn">
+                    افزودن نوشیدنی
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="admin-action-btn logout-admin-btn">
+                    خروج
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <span class="dashboard-label">کل نوشیدنی‌ها</span>
+                <strong>{{ total_count }}</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <span class="dashboard-label">نوشیدنی گرم</span>
+                <strong>{{ hot_count }}</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <span class="dashboard-label">نوشیدنی سرد</span>
+                <strong>{{ cold_count }}</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <span class="dashboard-label">ماچا</span>
+                <strong>{{ matcha_count }}</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <span class="dashboard-label">دمنوش</span>
+                <strong>{{ herbal_count }}</strong>
+            </div>
+
+            <div class="dashboard-card">
+                <span class="dashboard-label">شیک</span>
+                <strong>{{ shake_count }}</strong>
+            </div>
+        </div>
+
+        {% if latest_drink %}
+        <div class="latest-box">
+            آخرین آیتم اضافه‌شده:
+            <strong>{{ latest_drink.name }}</strong>
+            از دسته
+            <strong>{{ latest_drink.category }}</strong>
+        </div>
+        {% endif %}
+
+        <h2 class="admin-section-title">لیست نوشیدنی‌ها</h2>
+
+        <p class="admin-subtitle">
+            برای تغییر ترتیب نمایش، از دکمه‌های بالا، پایین، اول و آخر استفاده کن.
+        </p>
+
+        {% if drinks %}
+        <div class="admin-drinks">
+
+            {% for drink in drinks %}
+            <div class="admin-card">
+
+                <img src="{{ drink.image }}" alt="{{ drink.name }}">
+
+                <h2>{{ drink.name }}</h2>
+
+                <p class="admin-price">
+                    {{ "{:,}".format(drink.price) }} تومان
+                </p>
+
+                <p class="admin-category">
+                    دسته‌بندی: {{ drink.category }}
+                </p>
+
+                <div class="sort-actions">
+                    <form method="POST" action="{{ url_for('move_drink', id=drink.id, direction='up') }}" style="display:inline;">
+                        <button type="submit" class="sort-btn">↑ بالا</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('move_drink', id=drink.id, direction='down') }}" style="display:inline;">
+                        <button type="submit" class="sort-btn">↓ پایین</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('move_drink', id=drink.id, direction='top') }}" style="display:inline;">
+                        <button type="submit" class="sort-btn">اول</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('move_drink', id=drink.id, direction='bottom') }}" style="display:inline;">
+                        <button type="submit" class="sort-btn">آخر</button>
+                    </form>
+                </div>
+
+                <div class="admin-card-actions">
+                    <a class="edit-btn" href="{{ url_for('edit', id=drink.id) }}">
+                        ویرایش
+                    </a>
+
+                    <form method="POST"
+                          action="{{ url_for('delete', id=drink.id) }}"
+                          onsubmit="return confirm('آیا از حذف این آیتم مطمئن هستید؟')">
+                        <button type="submit" class="delete-btn">
+                            حذف
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="latest-box">
+            هنوز هیچ نوشیدنی‌ای ثبت نشده است.
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

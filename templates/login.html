@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ورود مدیریت</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>ورود مدیریت</h1>
+
+        <form method="POST">
+
+            <input type="text"
+                name="username"
+                placeholder="نام کاربری"
+                required>
+
+            <input type="password"
+                name="password"
+                placeholder="رمز عبور"
+                required>
+
+            <button type="submit">ورود</button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>
