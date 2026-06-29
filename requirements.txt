@@ -2,7 +2,3 @@ Flask
 Flask-SQLAlchemy
 gunicorn
 cloudinary
-psycopg2-binary
-SQLAlchemy
-Werkzeug
-MarkupSafe
